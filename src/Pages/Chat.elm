@@ -1,7 +1,6 @@
-port module Pages.Chat 
+module Pages.Chat 
   exposing
     ( view
-    , subscriptions
     )
 
 import Url
@@ -10,32 +9,26 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 
 import Msg exposing (Msg)
-import Model exposing (Model)
+import Models.User as User
+import State exposing (State)
 import Components.Chatbar as Chatbar
+import Components.SidePane as SidePane
 import Components.SplitPane exposing (contentId)
 
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
-
+header : Html Msg
 header = 
   div [class "header"]
   [ div [class "header-title"] 
     [ text "Chat"]
   ]
 
-sideMenu users = 
-  users
-  |> List.map (\user -> h1 [] [text user])
-  |> div [class "menu-pane"] 
 
-view : Model -> Browser.Document Msg
-view model =
+view : State -> Browser.Document Msg
+view state =
   { title = "Chat"
   , body =
       [ div [class "split-pane"]
-        [ sideMenu model.users
+        [ SidePane.view state
         , div [class "main-pane"]
           [ header
           , div [class "content-pane"] []

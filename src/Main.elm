@@ -10,12 +10,10 @@ import Html.Attributes exposing (..)
 import Ports
 import Ports.User
 import Pages.Chat
-import Model exposing(Model)
+import State exposing(State)
 import Pages exposing (Page(..))
 
--- MAIN
-
-main : Program () Model Msg
+main : Program () State Msg
 main =
   Browser.application
     { init = init
@@ -26,13 +24,9 @@ main =
     , onUrlRequest = LinkClicked
     }
 
--- MODEL
-
-init : () -> Url.Url -> Nav.Key -> (Model, Cmd Msg )
+init : () -> Url.Url -> Nav.Key -> (State, Cmd Msg )
 init flags url key =
-  (Model key url ChatPage [], Cmd.none)
-
--- UPDATE
+  (State.init url key, Cmd.none)
 
 handleLink model urlRequest =
   case urlRequest of
@@ -42,7 +36,7 @@ handleLink model urlRequest =
     Browser.External href ->
       (model, Nav.load href )
 
-update : Msg -> Model -> (Model, Cmd Msg )
+update : Msg -> State -> (State, Cmd Msg )
 update msg model =
   let 
     page = ChatPage
@@ -57,13 +51,13 @@ update msg model =
       ReceivedUsers users ->
         ({model | users = users}, Cmd.none)
 
-subscriptions : Model -> Sub Msg
+subscriptions : State -> Sub Msg
 subscriptions model =
   Sub.batch
   [ Ports.User.receivedUsers ReceivedUsers ]
 
 
-view : Model -> Browser.Document Msg
+view : State -> Browser.Document Msg
 view model =
   case model.page of
     ChatPage -> Pages.Chat.view model

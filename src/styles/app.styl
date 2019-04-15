@@ -1,0 +1,30 @@
+.chat-bar
+  bottom: 0
+  width: 100%
+  display: flex
+  padding: 8px
+  position: fixed
+  flex-direction: row
+  box-shadow: 0px -1px 1px #bbb
+  background-color: #f8f8f8
+  
+  ion-input
+    border-radius: 12px
+    border: 1px solid #eee
+    background-color: #fff
+
+  .send-button
+    padding: 0
+    right: 16px
+    bottom: 9px
+    z-index: 999
+    outline: none
+    position: fixed
+    font-size: 30px
+    background-color: transparent
+    color: var(--ion-color-primary,#3880ff)
+    transition: background-color 100ms linear
+    &:hover
+      color: var(--ion-color-primary-shade,#3171e0)
+    &:focus
+      color: var(--ion-color-primary-shade,#3171e0)

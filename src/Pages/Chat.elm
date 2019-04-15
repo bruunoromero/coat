@@ -11,9 +11,8 @@ import Html.Attributes exposing (..)
 
 import Msg exposing (Msg)
 import Model exposing (Model)
-import Components exposing (..)
-import Components.SplitPane exposing (contentId)
 import Components.Chatbar as Chatbar
+import Components.SplitPane exposing (contentId)
 
 
 subscriptions : Model -> Sub Msg
@@ -21,27 +20,26 @@ subscriptions model =
     Sub.none
 
 header = 
-  div [] 
-  [ div []
-    [ div [] 
-      [ text "Chat"]
-    ]
+  div [class "header"]
+  [ div [class "header-title"] 
+    [ text "Chat"]
   ]
 
 sideMenu users = 
   users
   |> List.map (\user -> h1 [] [text user])
-  |> div [contentId "menu-content"] 
+  |> div [class "menu-pane"] 
 
 view : Model -> Browser.Document Msg
 view model =
   { title = "Chat"
   , body =
-      [ div [contentId "menu-content"]
+      [ div [class "split-pane"]
         [ sideMenu model.users
-        , div [id "menu-content"]
+        , div [class "main-pane"]
           [ header
-          , div [] [ Chatbar.view ]
+          , div [class "content-pane"] []
+          , Chatbar.view
           ]
         ]
       ]

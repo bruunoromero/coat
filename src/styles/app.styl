@@ -1,14 +1,46 @@
+html, body
+  overflow: hidden
+
+html, body, .split-pane
+  height: 100%
+
+.split-pane
+  display: flex
+  flex-direction: row
+
+.menu-pane
+  height: 100%
+  flex: 0 0 270px
+  border-right: 1px solid #eee
+
+.main-pane
+  flex: 1
+  display: flex
+  flex-direction: column
+
+.content-pane
+  flex: 1
+
+.header
+  padding: 16px
+  background-color: #f8f8f8
+  box-shadow: 0px 1px 2px #bbb
+  border-bottom: 1px solid #eee
+
+.header-title
+  font-size: 22px
+
 .chat-bar
-  bottom: 0
-  width: 100%
   display: flex
   padding: 8px
-  position: fixed
   flex-direction: row
   box-shadow: 0px -1px 1px #bbb
   background-color: #f8f8f8
   
-  ion-input
+  input
+    width: 100%
+    padding: 14px
+    outline: none
     border-radius: 12px
     border: 1px solid #eee
     background-color: #fff

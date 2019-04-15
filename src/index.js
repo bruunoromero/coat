@@ -1,11 +1,14 @@
+import "normalize.css"
+import firebase from "firebase/app"
+
 import "./firebase"
 import "./styles/app.styl"
-import firebase from "firebase/app"
 
 import { Elm } from "./Main.elm"
 
 const app = Elm.Main.init()
 
-app.ports.start.subscribe(() => {
-  app.ports.receivedUsers.send(["aaa"])
-})
+firebase
+  .firestore()
+  .collection("users")
+  .onSnapshot(coll => app.ports.receivedUsers.send(["aaa"]))

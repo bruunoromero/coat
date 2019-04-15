@@ -12,7 +12,6 @@ import Ports.User
 import Pages.Chat
 import Model exposing(Model)
 import Pages exposing (Page(..))
-import Components exposing (ionApp, ionPage)
 
 -- MAIN
 
@@ -31,7 +30,7 @@ main =
 
 init : () -> Url.Url -> Nav.Key -> (Model, Cmd Msg )
 init flags url key =
-  (Model key url ChatPage [], Ports.start ())
+  (Model key url ChatPage [], Cmd.none)
 
 -- UPDATE
 
@@ -60,17 +59,11 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Ports.User.receivedUsers ReceivedUsers
+  Sub.batch
+  [ Ports.User.receivedUsers ReceivedUsers ]
 
-app : Browser.Document Msg -> Browser.Document Msg
-app document =
-  document
 
 view : Model -> Browser.Document Msg
 view model =
-  let 
-    body = 
-      case model.page of
-        ChatPage -> Pages.Chat.view model
-  in
-    app body
+  case model.page of
+    ChatPage -> Pages.Chat.view model

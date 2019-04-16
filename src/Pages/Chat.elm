@@ -11,9 +11,9 @@ import Html.Attributes exposing (..)
 import Msg exposing (Msg)
 import Models.User as User
 import State exposing (State)
-import Components.Chatbar as Chatbar
 import Components.SidePane as SidePane
 import Components.SplitPane exposing (contentId)
+import Components.WebView as WebView exposing (src)
 
 header : Html Msg
 header = 
@@ -30,10 +30,7 @@ view state =
       [ div [class "split-pane"]
         [ SidePane.view state
         , div [class "main-pane"]
-          [ header
-          , div [class "content-pane"] []
-          , Chatbar.view
-          ]
+          [ WebView.view ]
         ]
       ]
   }

@@ -2,12 +2,14 @@
   "name": "COAT",
   "version": "1.0.0",
   "description": "Chat to Optimize Annoying Tasks",
-  "main": "index.js",
+  "main": "main.js",
   "license": "MIT",
   "scripts": {
-    "start": "npx parcel index.html"
+    "start": "concurrently \"npx parcel index.html\" \"npx electron .\""
   },
   "devDependencies": {
+    "concurrently": "^4.1.0",
+    "electron": "^4.1.4",
     "elm": "^0.19.0-bugfix6",
     "elm-hot": "^1.0.1",
     "node-elm-compiler": "^5.0.3",

@@ -8,6 +8,7 @@ import Browser.Navigation as Nav
 import Html.Attributes exposing (..)
 
 import Ports
+import Ports.App
 import Ports.User
 import Pages.Chat
 import State exposing(State)
@@ -26,7 +27,7 @@ main =
 
 init : () -> Url.Url -> Nav.Key -> (State, Cmd Msg )
 init flags url key =
-  (State.init url key, Cmd.none)
+  (State.init url key, Ports.App.appSelected {id = "1", name = "Github"})
 
 handleLink model urlRequest =
   case urlRequest of
@@ -38,23 +39,30 @@ handleLink model urlRequest =
 
 update : Msg -> State -> (State, Cmd Msg )
 update msg model =
-  let 
+  let
     page = ChatPage
   in
     case msg of
       LinkClicked urlRequest -> 
         handleLink model urlRequest
+        
       UrlChanged url ->
         ({ model | url = url, page = page }
         , Cmd.none
         )
+
       ReceivedUsers users ->
         ({model | users = users}, Cmd.none)
+      
+      ReceivedApps apps ->
+        ({model | apps = apps}, Cmd.none)
 
 subscriptions : State -> Sub Msg
 subscriptions model =
   Sub.batch
-  [ Ports.User.receivedUsers ReceivedUsers ]
+  [ Ports.App.receivedApps ReceivedApps
+  , Ports.User.receivedUsers ReceivedUsers
+  ]
 
 
 view : State -> Browser.Document Msg

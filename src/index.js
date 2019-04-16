@@ -1,26 +1,32 @@
-import "normalize.css";
-import firebase from "firebase/app";
+import "normalize.css"
+import firebase from "firebase/app"
 
-import "./firebase";
-import "./styles/app.styl";
+import "./firebase"
+import "./styles/app.styl"
 
-import { Elm } from "./Main.elm";
+const electron = window.require("electron")
 
-const app = Elm.Main.init();
+import { Elm } from "./Main.elm"
+
+const app = Elm.Main.init()
 
 const mapCollection = coll => {
-  const docs = [];
+  const docs = []
 
   coll.forEach(doc => {
-    docs.push({ id: doc.id, ...doc.data() });
-  });
+    docs.push({ id: doc.id, ...doc.data() })
+  })
 
-  return docs;
-};
+  return docs
+}
 
 firebase
   .firestore()
-  .collection("users")
+  .collection("apps")
   .onSnapshot(coll => {
-    app.ports.receivedUsers.send(mapCollection(coll));
-  });
+    app.ports.receivedApps.send(mapCollection(coll))
+  })
+
+app.ports.appSelected.subscribe(app => {
+  console.log(app)
+})

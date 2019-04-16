@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 
 import State exposing (State)
+import Models.App as App
 import Models.User as User
 
 section title child =
@@ -12,15 +13,15 @@ section title child =
   , child
   ]
 
-userList : List String -> Html msg
-userList apps = 
+appsList : List App.Model -> Html msg
+appsList apps = 
   apps
-  |> List.map (\app -> li [] [text app])
+  |> List.map (\app -> li [] [text app.name])
   |> ul []
 
 view state = 
   div [class "menu-pane"] 
   [ state.apps
-    |> userList
-    |> section "apps" 
+    |> appsList
+    |> section "apps"
   ]
